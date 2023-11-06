@@ -28,8 +28,7 @@ jobs:
         pip install coverage
         pip install selenium
         npm init
-        npm i coverage
-        npm install
+        npm install coverage
 
     - name: Run migrations
       run: |
