@@ -1,0 +1,58 @@
+name: Django CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        cd budgetproject
+        pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install coverage
+
+    - name: Run migrations
+      run: |
+        source venv/bin/activate
+        cd budgetproject
+        python manage.py makemigrations
+        python manage.py migrate
+
+    - name: Run tests with coverage
+      run: |
+        source venv/bin/activate
+        cd budgetproject
+        coverage run manage.py test
+        coverage report
+        coverage xml -o coverage.xml
+
+    - name: List coverage report file
+      run: |
+        cd budgetproject
+        ls -la coverage.xml
+
+    - name: Publish coverage results to Code Climate
+      uses: paambaati/codeclimate-action@v2.7.5
+      env:
+        CC_TEST_REPORTER_ID: 64d32b9c37b36a357cb3c621003046c42a631480d90e78261a278127d19bbf22
+      with:
+        prefix: ./budgetproject
+        debug: true
+        coverageLocations: |
+          ${{github.workspace}}/budgetproject/coverage.xml:lcov
