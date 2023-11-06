@@ -48,14 +48,7 @@ jobs:
       run: |
         cd budgetproject
         ls -la coverage.xml
-
-    - name: Publish coverage results to Code Climate
+    - name: Test & publish code coverage
       uses: paambaati/codeclimate-action@v5.0.0
       env:
         CC_TEST_REPORTER_ID: 64d32b9c37b36a357cb3c621003046c42a631480d90e78261a278127d19bbf22
-      with:
-        coverageCommand: npm run coverage
-        prefix: ./budgetproject
-        debug: true
-        coverageLocations: |
-          ${{github.workspace}}/budgetproject/coverage.xml:lcov
