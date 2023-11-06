@@ -49,7 +49,7 @@ jobs:
         ls -la coverage.xml
 
     - name: Publish coverage results to Code Climate
-      uses: paambaati/codeclimate-action@v2.2.4
+      uses: paambaati/codeclimate-action@v5.0.0
       env:
         CC_TEST_REPORTER_ID: 64d32b9c37b36a357cb3c621003046c42a631480d90e78261a278127d19bbf22
       with:
