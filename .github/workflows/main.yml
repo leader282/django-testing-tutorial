@@ -40,15 +40,15 @@ jobs:
       run: |
         source venv/bin/activate
         cd budgetproject
-        coverage run manage.py test
-        coverage report
-        coverage xml -o coverage.xml
+        python -m coverage run manage.py test
+        python -m coverage report
+        python -m coverage xml -o coverage.xml
 
     - name: Test & publish code coverage
       uses: paambaati/codeclimate-action@v5.0.0
       env:
         CC_TEST_REPORTER_ID: 64d32b9c37b36a357cb3c621003046c42a631480d90e78261a278127d19bbf22
       with:
-        coverageCommand: cd budgetproject && coverage xml -o coverage.xml
+        coverageCommand: python -m coverage xml -o coverage.xml
         coverageLocations: "budgetproject/coverage.xml:cobertura"
         debug: true
