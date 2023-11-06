@@ -52,6 +52,9 @@ jobs:
       uses: paambaati/codeclimate-action@v5.0.0
       env:
         CC_TEST_REPORTER_ID: 64d32b9c37b36a357cb3c621003046c42a631480d90e78261a278127d19bbf22
+      run: |
+        cd budgetproject
+        npm install coverage
       with:
         coverageCommand: npm run coverage
         prefix: ./budgetproject
